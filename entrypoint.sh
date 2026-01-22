@@ -17,7 +17,7 @@ if [ ! -f "$MARKER" ]; then
 fi
 
 # Optional: run all_runs.sh
-ALL_RUNS="/workspace/roman/all_runs.sh"
+ALL_RUNS="/workspace/roman/roman_mount/runs/All_runs.sh"
 
 if [ -x "$ALL_RUNS" ]; then
   # Only prompt if stdin is a TTY (interactive)
