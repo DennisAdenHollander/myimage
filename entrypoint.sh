@@ -16,5 +16,26 @@ if [ ! -f "$MARKER" ]; then
   touch "$MARKER"
 fi
 
+# Optional: run all_runs.sh
+ALL_RUNS="/workspace/roman/all_runs.sh"
+
+if [ -x "$ALL_RUNS" ]; then
+  # Only prompt if stdin is a TTY (interactive)
+  if [ -t 0 ]; then
+    read -rp "Run all_runs.sh now? [y/N]: " answer
+    case "$answer" in
+      y|Y|yes|YES)
+        echo ">> Running all_runs.sh"
+        bash "$ALL_RUNS"
+        ;;
+      *)
+        echo ">> Skipping all_runs.sh"
+        ;;
+    esac
+  else
+    echo ">> Non-interactive shell, skipping all_runs.sh"
+  fi
+fi
+
 exec "$@"
 
