@@ -22,7 +22,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libxext6 \
     libxrender1 \
  && rm -rf /var/lib/apt/lists/*
- # added L14 until L23. From 18 onwards is for display 
+ # From line 18 onwards is for display 
 
 # Make sure any git@github.com:... URL becomes HTTPS (no username prompt)
 RUN git config --global url."https://github.com/".insteadOf git@github.com: \
@@ -43,6 +43,25 @@ RUN pip install --no-cache-dir \
     "torchvision==0.19.0" \
     "opencv-python"
 
+
+#############################
+# Clone repo
+#############################
+ARG REPO_URL="https://github.com/DennisAdenHollander/myimage.git"
+ARG REPO_REF="main"
+
+RUN git clone --depth 1 --branch "${REPO_REF}" "${REPO_URL}" /tmp/repo
+
+#############################
+# Place components in /workspace
+#############################
+RUN mv /tmp/repo/MaskDINO /workspace/MaskDINO \
+ && mv /tmp/repo/roman /workspace/roman \
+ && mv /tmp/repo/entrypoint.sh /workspace/entrypoint.sh \
+ && chmod +x /workspace/entrypoint.sh \
+ && rm -rf /tmp/repo
+
+
 #############################
 # Detectron2
 #############################
@@ -57,26 +76,15 @@ RUN git clone https://github.com/facebookresearch/detectron2.git \
 #############################
 # MaskDINO + MSDeformAttn CUDA kernel
 #############################
-WORKDIR /workspace
-
-#RUN git clone https://github.com/IDEA-Research/MaskDINO.git \
-# && cd MaskDINO \
-
-COPY MaskDINO /workspace/MaskDINO
-
-RUN cd MaskDINO \
+RUN cd /workspace/MaskDINO \
  && pip install --no-cache-dir -r requirements.txt \
  && cd maskdino/modeling/pixel_decoder/ops \
  && TORCH_CUDA_ARCH_LIST="6.1" FORCE_CUDA=1 python setup.py build install
 
 #############################
-# Install ROMAN
+# GTSAM (dependency for Kimera-RPGO / ROMAN)
 #############################
-
-WORKDIR /workspace
-
-# Build & install GTSAM (dependency for Kimera-RPGO)
-RUN git clone https://github.com/borglab/gtsam.git \
+RUN git clone --depth 1 https://github.com/borglab/gtsam.git \
  && cd gtsam \
  && mkdir build && cd build \
  && cmake .. \
@@ -88,38 +96,13 @@ RUN git clone https://github.com/borglab/gtsam.git \
  && make install \
  && ldconfig
 
-
 WORKDIR /workspace
 
-#RUN git clone https://github.com/mit-acl/roman.git
-
-COPY roman /workspace/roman
-
-
-
-# Add demo data for ROMAN
-# ADD demo_data/ demo_data/
-
 #############################
-# MaskDINO data / config
+# Entrypoint
 #############################
-
-#WORKDIR /workspace/MaskDINO
-
-#ADD office.jpeg office.jpeg
-#ADD MaskDINO-ADE20K.pth maskdino_r50_50ep_100q_celoss_hid1024_3s_semantic_ade20k_48.7miou.pth
-#RUN cp configs/ade20k/semantic-segmentation/* .
-
-WORKDIR /workspace
-
-COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
-
-ENTRYPOINT ["/entrypoint.sh"]
-CMD ["/bin/bash"]
-
-
 ENV DISPLAY=:0
 
+ENTRYPOINT ["/workspace/entrypoint.sh"]
 CMD ["/bin/bash"]
 

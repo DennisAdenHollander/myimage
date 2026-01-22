@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Patch (idempotent: meerdere keren draaien is ok)
+# Patch (idempotent: run multiple times is ok)
 sed -i 's/params\.diagonalDamping = true;/params.setDiagonalDamping(true);/' \
   /workspace/roman/dependencies/Kimera-RPGO/src/GenericSolver.cpp || true
 
