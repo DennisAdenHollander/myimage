@@ -97,6 +97,12 @@ RUN git clone --depth 1 https://github.com/borglab/gtsam.git \
  && ldconfig
 
 WORKDIR /workspace
+mkdir -p /workspace/roman/roman_mount/Odom_results/{FastSAM,MaskDINO,MaskDINO+Plane,MaskDINO+Plane+Class,MaskDINO+Plane+Class+Conf}
+
+WORKDIR /workspace
+mkdir -p /workspace/roman/roman_mount/VIO_results/{FastSAM,MaskDINO,MaskDINO+Plane,MaskDINO+Plane+Class,MaskDINO+Plane+Class+Conf}
+
+WORKDIR /workspace
 
 #############################
 # Entrypoint
