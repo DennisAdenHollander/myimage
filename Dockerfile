@@ -61,6 +61,8 @@ RUN mv /tmp/repo/MaskDINO /workspace/MaskDINO \
  && chmod +x /workspace/entrypoint.sh \
  && rm -rf /tmp/repo
 
+RUN chmod +x /workspace/entrypoint.sh \
+ && chmod +x /workspace/roman/roman_mount/runs/all_runs.sh || true
 
 #############################
 # Detectron2
