@@ -13,4 +13,4 @@ docker image prune -f
 docker builder prune -f
 ###############################################################
 
-docker build --tag "dennis:latest" .
+docker build --no-cache --pull --tag "dennis:latest" .
