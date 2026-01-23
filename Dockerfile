@@ -2,6 +2,14 @@ FROM pytorch/pytorch:2.4.0-cuda11.8-cudnn9-devel
 
 ENV DEBIAN_FRONTEND=noninteractive
 
+RUN printf 'Acquire::ForceIPv4 "true";\n' > /etc/apt/apt.conf.d/99force-ipv4
+
+#RUN apt-get update && apt-get install -y --no-install-recommends \
+#    ca-certificates gnupg \ 
+# && rm -rf /var/lib/apt/lists/*
+
+
+
 # Basic build deps + OpenCV runtime libs + Eigen + BLAS/LAPACK (needed for CLIPPER/SCS)
 RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
@@ -94,7 +102,7 @@ RUN git clone --depth 1 https://github.com/borglab/gtsam.git \
       -DGTSAM_ROT3_EXPMAP=ON \
       -DGTSAM_BUILD_EXAMPLES_ALWAYS=OFF \
       -DGTSAM_BUILD_TESTS=OFF \
- && make -j"$(nproc)" \
+ && make -j2 \
  && make install \
  && ldconfig
 
