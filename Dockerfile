@@ -8,8 +8,6 @@ RUN printf 'Acquire::ForceIPv4 "true";\n' > /etc/apt/apt.conf.d/99force-ipv4
 #    ca-certificates gnupg \ 
 # && rm -rf /var/lib/apt/lists/*
 
-
-
 # Basic build deps + OpenCV runtime libs + Eigen + BLAS/LAPACK (needed for CLIPPER/SCS)
 RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
