@@ -59,13 +59,13 @@ def extract_params(data_params_path, fastsam_params_path, mapper_params_path, ru
     return data_params, fastsam_params, mapper_params
 
 def run(
-    run_name: str = None,
     data_params: DataParams, 
     fastsam_params: FastSAMParams, 
     mapper_params: MapperParams,
     output_path: str,
     viz_params: VisualizationParams = VisualizationParams(),
-    verbose: bool = False
+    verbose: bool = False,
+    run_name: str = None
 ):
     
     runner = ROMANMapRunner(data_params=data_params, 
@@ -200,8 +200,8 @@ def mapping(
                 'relative': relative}
             
             if verbose: print(f"\n---\nRunning mapping iteration {mapping_iter}\n---\n")
-            run(run_name, data_params, fastsam_params, mapper_params, 
-                output_path=f"{output_path}_{mapping_iter}", viz_params=viz_params, verbose=verbose)
+            run(data_params, fastsam_params, mapper_params, 
+                output_path=f"{output_path}_{mapping_iter}", viz_params=viz_params, verbose=verbose, run_name=run_name)
             
             mapping_iter += 1
 
