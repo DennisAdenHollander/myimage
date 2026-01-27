@@ -115,7 +115,9 @@ RUN mkdir -p \
   /workspace/roman/roman_mount/VIO_results/MaskDINO \
   /workspace/roman/roman_mount/VIO_results/MaskDINO+Plane \
   /workspace/roman/roman_mount/VIO_results/MaskDINO+Plane+Class \
-  /workspace/roman/roman_mount/VIO_results/MaskDINO+Plane+Class+Conf
+  /workspace/roman/roman_mount/VIO_results/MaskDINO+Plane+Class+Conf \
+  /workspace/roman/roman_mount/Count_results
+  
 
 
 WORKDIR /workspace

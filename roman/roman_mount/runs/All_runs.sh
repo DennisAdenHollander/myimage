@@ -45,7 +45,5 @@ python3 /workspace/roman/demo/demo_maskdino.py \
 python3 /workspace/roman/demo/demo_maskdino.py \
     -p /workspace/roman/params/VIO/MaskDINO+Plane+Class+Conf \
     -o /workspace/roman/roman_mount/VIO_results/MaskDINO+Plane+Class+Conf    
-    
-    
-    
+
          

@@ -48,5 +48,38 @@ else
   echo ">> All_runs.sh not found or not executable"
 fi
 
+# Optional: run run_count.sh
+RUN_COUNT="/workspace/roman/roman_mount/runs/run_count.sh"
+
+echo ">> Checking run_count at: $RUN_COUNT"
+if [ -f "$RUN_COUNT" ]; then
+  chmod +x "$RUN_COUNT" || true
+fi
+
+if [ -x "$RUN_COUNT" ]; then
+  # If env var is set, don't prompt
+  if [ "${RUN_RUN_COUNT:-0}" = "1" ]; then
+    echo ">> RUN_RUN_COUNT=1, running run_count.sh"
+    bash "$RUN_COUNT"
+  # Otherwise prompt only if interactive
+  elif [ -t 0 ]; then
+    read -rp "Run run_count.sh now? [y/N]: " answer
+    case "$answer" in
+      y|Y|yes|YES)
+        echo ">> Running run_count.sh"
+        bash "$RUN_COUNT"
+        ;;
+      *)
+        echo ">> Skipping run_count.sh"
+        ;;
+    esac
+  else
+    echo ">> Non-interactive shell, skipping run_count.sh (set RUN_RUN_COUNT=1 to force)"
+  fi
+else
+  echo ">> run_count.sh not found or not executable"
+fi
+
+
 exec "$@"
 
