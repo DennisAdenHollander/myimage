@@ -7,6 +7,6 @@ export ROMAN_WEIGHTS=/workspace/roman/weights
 python3 /workspace/roman/demo/class_count.py \
     -p /workspace/roman/params/VIO/MaskDINO \
     -o /workspace/roman/roman_mount/Count_results \
-    --max-time 120   
+    --max-time 240  
     
          
