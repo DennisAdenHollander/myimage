@@ -16,70 +16,41 @@ if [ ! -f "$MARKER" ]; then
   touch "$MARKER"
 fi
 
-# Optional: run All_runs.sh
+# Optional: run All_runs.sh (NO PROMPT)
 ALL_RUNS="/workspace/roman/roman_mount/runs/All_runs.sh"
-
 echo ">> Checking All_runs at: $ALL_RUNS"
 if [ -f "$ALL_RUNS" ]; then
   chmod +x "$ALL_RUNS" || true
 fi
 
 if [ -x "$ALL_RUNS" ]; then
-  # If env var is set, don't prompt
   if [ "${RUN_ALL_RUNS:-0}" = "1" ]; then
     echo ">> RUN_ALL_RUNS=1, running All_runs.sh"
     bash "$ALL_RUNS"
-  # Otherwise prompt only if interactive
-  elif [ -t 0 ]; then
-    read -rp "Run All_runs.sh now? [y/N]: " answer
-    case "$answer" in
-      y|Y|yes|YES)
-        echo ">> Running All_runs.sh"
-        bash "$ALL_RUNS"
-        ;;
-      *)
-        echo ">> Skipping All_runs.sh"
-        ;;
-    esac
   else
-    echo ">> Non-interactive shell, skipping All_runs.sh (set RUN_ALL_RUNS=1 to force)"
+    echo ">> RUN_ALL_RUNS not set, skipping All_runs.sh"
   fi
 else
   echo ">> All_runs.sh not found or not executable"
 fi
 
-# Optional: run run_count.sh
+# Optional: run run_count.sh (NO PROMPT)
 RUN_COUNT="/workspace/roman/roman_mount/runs/run_count.sh"
-
 echo ">> Checking run_count at: $RUN_COUNT"
 if [ -f "$RUN_COUNT" ]; then
   chmod +x "$RUN_COUNT" || true
 fi
 
 if [ -x "$RUN_COUNT" ]; then
-  # If env var is set, don't prompt
   if [ "${RUN_RUN_COUNT:-0}" = "1" ]; then
     echo ">> RUN_RUN_COUNT=1, running run_count.sh"
     bash "$RUN_COUNT"
-  # Otherwise prompt only if interactive
-  elif [ -t 0 ]; then
-    read -rp "Run run_count.sh now? [y/N]: " answer
-    case "$answer" in
-      y|Y|yes|YES)
-        echo ">> Running run_count.sh"
-        bash "$RUN_COUNT"
-        ;;
-      *)
-        echo ">> Skipping run_count.sh"
-        ;;
-    esac
   else
-    echo ">> Non-interactive shell, skipping run_count.sh (set RUN_RUN_COUNT=1 to force)"
+    echo ">> RUN_RUN_COUNT not set, skipping run_count.sh"
   fi
 else
   echo ">> run_count.sh not found or not executable"
 fi
-
 
 exec "$@"
 
