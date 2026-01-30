@@ -521,7 +521,7 @@ class FastSAMWrapper:
                 # confidence filter
                 if self.prob_threshold is not None:
                     inst_scores = float(sem_scores2[instance_mask].mean())
-                    if inst_scores < self.prob_threshold:
+                    if inst_scores < float(self.prob_threshold):
                         continue
                         
                 masks.append(instance_mask.astype("uint8"))
