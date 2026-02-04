@@ -66,7 +66,12 @@ class ROMANMap:
         elif len(roman_maps) == 2:
             other = deepcopy(roman_maps[1])
             assert reference.poses_are_flu == other.poses_are_flu
-            max_seg_id = max([seg.id for seg in reference.segments])
+            
+            if len(reference.segments) == 0:
+                max_seg_id = 0
+            else:
+                max_seg_id = max(seg.id for seg in reference.segments)
+                
             for segment in other.segments:
                 segment.id += max_seg_id
             return cls(
