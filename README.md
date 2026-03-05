@@ -13,7 +13,6 @@ The original ROMAN paper can be found [here](https://www.roboticsproceedings.org
 
 ## System Overview
 
-<img src="./media/system_diagram.jpg" alt="System diagram" width="700"/>
 
 ROMAN has three modules: mapping, data association, and
 pose graph optimization. The front-end mapping pipeline tracks
