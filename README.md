@@ -114,6 +114,9 @@ VIO/MaskDINO
 ```
 If you change the robots used in the experiments, the counting script must be updated accordingly.
 
+### 7. Evaluation
+
+To evaluate the results of each run, execute `roman/evaluation/evaluate.py` for the reported PR AUC value, execute `roman/evaluation/avg_fastsam_times.py` for the reported runtime, and `roman/roman/offline_rgpo/evaluate.py` for the reported ATE RMSE. 
  
 
 
